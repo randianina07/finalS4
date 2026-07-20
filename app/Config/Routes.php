@@ -6,8 +6,19 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'AuthController::accueil');
+
 $routes->get('/login/operateur', 'AuthController::loginOperateur');
-$routes->get('/login/client', 'AuthController::loginClient');
 $routes->post('/login/operateur', 'AuthController::authenticateOperateur');
+
+$routes->get('/login/client', 'AuthController::loginClient');
 $routes->post('/login/client', 'AuthController::authenticateClient');
+
 $routes->get('/logout', 'AuthController::logout');
+
+$routes->group('client', ['filter' => 'client'], function($routes){
+    $routes->get('dashboard', 'ClientController::dashboard');
+});
+
+$routes->group('operateur', ['filter' => 'operateur'], function($routes){
+    $routes->get('dashboard', 'OperateurController::dashboard');
+});
