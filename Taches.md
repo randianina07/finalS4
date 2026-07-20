@@ -5,7 +5,7 @@
 - [ ] Configurer CodeIgniter  pour utiliser SQLite
 - [ ] Créer les Migrations pour la base de données :
 - [ ] configurations : Pour stocker les préfixes valides (ex: 033, 037).
-- [ ] clients : id, numero_telephone (unique), solde (par défaut 0).
+- [ ] clients : id, numero_telephone , solde.
 - [ ] type_operations : id, nom (depot, retrait, transfert).
 - [ ] baremes_frais : id, type_operation_id, montant_min, montant_max, frais.
 - [ ] mouvement : id, type_operation_id, client_source_id (null si dépôt), client_destination_id (null si retrait ou dépôt), montant_brut, frais, montant_net, date_creation.
