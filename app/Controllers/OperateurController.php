@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\BaremesFrais;
+use App\Models\Clients;
 class OperateurController extends BaseController{
     public function index(){}
 
@@ -10,8 +11,13 @@ class OperateurController extends BaseController{
        $builder = $db->table('clients c');
        $builder->select('c.*');
        $clients = $builder->get()->getResultArray();
+       $clientModel = new Clients();
+       $data = [
+            'clients' => $clientModel->paginate(10),
+            'pager'   => $clientModel->pager
+        ];
     
-        return view('admin/clients', ['clients' => $clients]);
+        return view('admin/clients', $data);
     }
     
     public function gains(){
