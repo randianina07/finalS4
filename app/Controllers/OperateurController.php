@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\BaremesFrais;
-class OperateurController extends Controller{
+class OperateurController extends BaseController{
     public function index(){}
 
     public function compteClient(){

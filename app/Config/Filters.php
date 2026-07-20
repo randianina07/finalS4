@@ -12,8 +12,8 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
-use CodeIgniter\Filters\ClientFilter;
-use CodeIgniter\Filters\OperateurFilter;
+use App\Filters\ClientFilter;
+use App\Filters\OperateurFilter;
 
 class Filters extends BaseFilters
 {
