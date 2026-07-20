@@ -10,6 +10,7 @@
 - [ ] baremes_frais : id, type_operation_id, montant_min, montant_max, frais.
 - [ ] mouvement : id, type_operation_id, client_source_id (null si dépôt), client_destination_id (null si retrait ou dépôt), montant_brut, frais, montant_net, date_creation.
 - [ ] Créer un seeder .
+- [ ] init models dans le projet 
 
 ## Espace Client (Authentification & Vues)
 - [ ] Connexion automatique :
