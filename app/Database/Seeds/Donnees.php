@@ -95,5 +95,19 @@ class Donnees extends Seeder
                 'frais' => 0
             ],
         ]);
+
+        /*
+         * OPERATEURS DE TEST
+         */
+        $this->db->table('operateurs')->insertBatch([
+            [
+                'nom' => 'Operateur1',
+                'mot_de_passe' => password_hash('password1', PASSWORD_DEFAULT)
+            ],
+            [
+                'nom' => 'Operateur2',
+                'mot_de_passe' => password_hash('password2', PASSWORD_DEFAULT)
+            ],
+        ]);
     }
 }
