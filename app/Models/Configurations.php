@@ -8,7 +8,8 @@ class Configurations extends Model{
 
     protected $primaryKey = 'id';
     protected $allowedFields = [
-        'prefixe'
+        'prefixe',
+        'reseau_id'
     ];
 
     public function prefixeValide($telephone)

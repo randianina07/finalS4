@@ -28,6 +28,7 @@
                     <thead>
                         <tr>
                             <th>Préfixe</th>
+                            <th>Nom Réseau</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -35,6 +36,7 @@
                         <?php foreach ($prefixes as $p): ?>
                             <tr>
                                 <td><?= esc($p['prefixe']) ?></td>
+                                <td><?= esc($p['nom_reseau']) ?></td>
                                 <td>
                                     <a class="btn-delete" href="/operateur/prefixes/supprimer/<?= $p['id'] ?>"
                                        onclick="return confirm('Supprimer ce préfixe ?');">Supprimer</a>

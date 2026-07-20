@@ -1,6 +1,7 @@
 CREATE TABLE configurations (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    prefixe TEXT NOT NULL UNIQUE
+    prefixe TEXT NOT NULL UNIQUE,
+    reseau_id INTEGER NOT NULL
 );
 
 CREATE TABLE clients (
@@ -36,6 +37,12 @@ CREATE TABLE operateurs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nom TEXT NOT NULL UNIQUE,
     mot_de_passe TEXT NOT NULL
+);
+
+CREATE TABLE reseaux (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nom TEXT NOT NULL UNIQUE,
+    commission_transfert REAL NOT NULL DEFAULT 0.0
 );
 
 INSERT INTO `configurations` (`prefixe`) VALUES 

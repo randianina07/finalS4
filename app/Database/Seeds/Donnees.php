@@ -9,11 +9,60 @@ class Donnees extends Seeder
     public function run()
     {
         /*
-         * CONFIGURATIONS
-         */
+        * RESEAUX
+        */
+        $this->db->table('reseaux')->insertBatch([
+            [
+                'nom' => 'MonOperateur',
+                'commission_transfert' => 0
+            ],
+            [
+                'nom' => 'Airtel',
+                'commission_transfert' => 20
+            ],
+            [
+                'nom' => 'Orange',
+                'commission_transfert' => 15
+            ],
+        ]);
+
+
+        $reseaux = $this->db->table('reseaux')
+            ->get()
+            ->getResultArray();
+
+        $idsReseaux = [];
+
+        foreach ($reseaux as $reseau) {
+            $idsReseaux[$reseau['nom']] = $reseau['id'];
+        }
+
+        /*
+        * PREFIXES
+        */
         $this->db->table('configurations')->insertBatch([
-            ['prefixe' => '033'],
-            ['prefixe' => '037'],
+
+            // Mon opérateur
+            [
+                'prefixe' => '033',
+                'reseau_id' => $idsReseaux['MonOperateur']
+            ],
+            [
+                'prefixe' => '037',
+                'reseau_id' => $idsReseaux['MonOperateur']
+            ],
+
+            // Airtel
+            [
+                'prefixe' => '032',
+                'reseau_id' => $idsReseaux['Airtel']
+            ],
+
+            // Orange
+            [
+                'prefixe' => '034',
+                'reseau_id' => $idsReseaux['Orange']
+            ],
         ]);
 
         /*
@@ -40,6 +89,16 @@ class Donnees extends Seeder
             [
                 'numero_telephone' => '0335555555',
                 'solde' => 250000
+            ],
+
+            // Réseaux externes
+            [
+                'numero_telephone' => '0321111111',
+                'solde' => 70000
+            ],
+            [
+                'numero_telephone' => '0342222222',
+                'solde' => 90000
             ],
         ]);
 
