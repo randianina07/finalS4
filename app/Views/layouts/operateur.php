@@ -17,6 +17,7 @@
                 <a href="/operateur/dashboard">Tableau de bord</a>
                 <a href="/operateur/clients">Clients</a>
                 <a href="/operateur/gains">Gains</a>
+                <a href="/operateur/montants">Montants</a>
                 <a href="/operateur/baremes">Barèmes</a>
                 <a href="/operateur/prefixes">Préfixes</a>
                 <a href="/operateur/reseaux">Réseaux</a>

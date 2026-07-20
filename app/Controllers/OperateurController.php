@@ -22,35 +22,12 @@ class OperateurController extends BaseController{
     
         return view('operateur/clients', $data);
     }
-    
-    // public function gains(){
-    //     $db = \Config\Database::connect();
-    //     $builder = $db->table('mouvements t');
-    //     $builder->select('t.type_operation_id, sum(t.frais) as total_frais');
-    //     $builder->whereIn('t.type_operation_id', [2, 3]);
-    //     $builder->groupBy('t.type_operation_id');
-        
-    //     $gainsParType = $builder->get()->getResultArray();
-
-    //     $gainsParReseau = [];
-
-    //     $totalGeneral = 0;
-    //     foreach ($gainsParType as $gain) {
-    //         $totalGeneral += (float) $gain['total_frais'];
-    //     }
-
-    //     $data = [
-    //         'gains' => $gainsParType,
-    //         'total_general' => $totalGeneral
-    //     ];
-
-    //     return view('operateur/gains', $data);
-    // }
 
     public function gains()
     {
         $db = \Config\Database::connect();
 
+        // Total des gains par type d'opération
         $builder = $db->table('mouvements m');
         $builder->select('t.nom, SUM(m.frais) as total_frais');
         $builder->join(
@@ -65,6 +42,7 @@ class OperateurController extends BaseController{
 
         $gainsParType = $builder->get()->getResultArray();
 
+        // Total des gains par réseau
         $builder = $db->table('mouvements m');
         $builder->select('
             r.nom as reseau,
@@ -221,5 +199,67 @@ class OperateurController extends BaseController{
         $reseaux = $reseauxModel->getAllReseaux();
 
         return view('operateur/prefixes', ['prefixes' => $prefixes, 'reseaux' => $reseaux]);
+    }
+
+    public function montants()
+    {
+        $db = \Config\Database::connect();
+
+        // Total des montants externes
+        $builder = $db->table('mouvements m');
+        $builder->selectSum('m.montant_brut', 'total_externe');
+        $builder->join(
+            'clients c',
+            'c.id = m.client_destination_id'
+        );
+        $builder->join(
+            'configurations conf',
+            'conf.prefixe = substr(c.numero_telephone,1,3)'
+        );
+        $builder->where('conf.reseau_id !=', 1);
+        $builder->where(
+            'm.type_operation_id',
+            3
+        );
+
+        $totalExterne = $builder->get()->getRowArray();
+
+        // Montants par réseau
+        $builder = $db->table('mouvements m');
+        $builder->select('
+            r.nom as reseau,
+            SUM(m.montant_brut) as montant
+        ');
+        $builder->join(
+            'clients c',
+            'c.id = m.client_destination_id'
+        );
+        $builder->join(
+            'configurations conf',
+            'conf.prefixe = substr(c.numero_telephone,1,3)'
+        );
+        $builder->join(
+            'reseaux r',
+            'r.id = conf.reseau_id'
+        );
+        $builder->where(
+            'm.type_operation_id',
+            3
+        );
+        $builder->where(
+            'conf.reseau_id !=',
+            1
+        );
+        $builder->groupBy('r.id');
+
+        $montantsParReseau = $builder->get()->getResultArray();
+
+        return view(
+            'operateur/montants',
+            [
+                'total_externe' => $totalExterne['total_externe'] ?? 0,
+                'montants_reseaux' => $montantsParReseau
+            ]
+        );
     }
 }
