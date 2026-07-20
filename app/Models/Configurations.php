@@ -11,4 +11,10 @@ class Configurations extends Model{
         'prefixe'
     ];
 
+    public function prefixeValide($telephone)
+    {
+        $prefixe = substr($telephone, 0, 3);
+        return $this->where('prefixe', $prefixe)->first();
+    }
+
 }

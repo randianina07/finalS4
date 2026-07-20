@@ -31,3 +31,9 @@ CREATE TABLE mouvements (
     frais REAL NOT NULL,
     date_creation DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE operateurs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nom TEXT NOT NULL UNIQUE,
+    mot_de_passe TEXT NOT NULL
+);

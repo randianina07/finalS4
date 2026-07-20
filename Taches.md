@@ -7,29 +7,21 @@
 - **X** pour Sundy
 - **ok** pour Randi
 - [ok] Initialiser le dépôt Git public (Randi)
-- [ ] Configurer CodeIgniter pour utiliser SQLite
-- [ ] Créer les Migrations pour la base de données :
-- [ ] configurations : Pour stocker les préfixes valides (ex: 033, 037).
-- [ ] clients : id, numero_telephone , solde.
-- [ ] type_operations : id, nom (depot, retrait, transfert).
-- [ ] baremes_frais : id, type_operation_id, montant_min, montant_max, frais.
-- [ ] mouvement : id, type_operation_id, client_source_id (null si dépôt), client_destination_id (null si retrait ou dépôt), montant_brut, frais, montant_net, date_creation.
-- [ ] Créer un seeder .
 - [ok] init models dans le projet (Randi)
-  - [ok] configurations : Pour stocker les préfixes valides (ex: 033, 037).
-  - [ok] clients : id, numero_telephone , solde.
-  - [ok] type_operations : id, nom (depot, retrait, transfert).
-  - [ok] baremes_frais : id, type_operation_id, montant_min, montant_max, frais.
-  - [ok] mouvement : id, type_operation_id, client_source_id (null si dépôt), client_destination_id (null si retrait ou dépôt), montant_brut, frais, date_creation.
-- [x] Initialiser le dépôt Git public
-- [x] Configurer CodeIgniter pour utiliser SQLite
-- [x] Créer les Migrations pour la base de données :
-- [x] configurations : Pour stocker les préfixes valides (ex: 033, 037).
-- [x] clients : id, numero_telephone , solde.
-- [x] type_operations : id, nom (depot, retrait, transfert).
-- [x] baremes_frais : id, type_operation_id, montant_min, montant_max, frais.
-- [x] mouvements : id, type_operation_id, client_source_id (null si dépôt), client_destination_id (null si retrait ou dépôt), montant_brut, frais, montant_net, date_creation.
-- [x] Créer un seeder .
+    - [ok] configurations : Pour stocker les préfixes valides (ex: 033, 037).
+    - [ok] clients : id, numero_telephone , solde.
+    - [ok] type_operations : id, nom (depot, retrait, transfert).
+    - [ok] baremes_frais : id, type_operation_id, montant_min, montant_max, frais.
+    - [ok] mouvement : id, type_operation_id, client_source_id (null si dépôt), client_destination_id (null si retrait ou dépôt), montant_brut, frais, date_creation.
+- [X] Configurer CodeIgniter  pour utiliser SQLite (Sundy)
+- [X] Créer les Migrations pour la base de données :  (Sundy)
+- [X] configurations : Pour stocker les préfixes valides (ex: 033, 037).    (Sundy)
+- [X] clients : id, numero_telephone , solde.   (Sundy)
+- [X] type_operations : id, nom (depot, retrait, transfert).    (Sundy)
+- [X] baremes_frais : id, type_operation_id, montant_min, montant_max, frais.   (Sundy)
+- [X] mouvemens : id, type_operation_id, client_source_id (null si dépôt), client_destination_id (null si retrait ou dépôt), montant_brut, frais, montant_net, date_creation.   (Sundy)
+- [X] operateurs : id, nom, mot_de_passe    (Sundy)
+- [X] Créer un seeder .     (Sundy)
 
 ## Espace Client (Authentification & Vues)
 
