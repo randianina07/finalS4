@@ -29,6 +29,5 @@ CREATE TABLE mouvements (
     client_destination_id INTEGER,
     montant_brut REAL NOT NULL,
     frais REAL NOT NULL,
-    montant_net REAL NOT NULL,
     date_creation DATETIME DEFAULT CURRENT_TIMESTAMP
 );
