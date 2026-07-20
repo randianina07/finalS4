@@ -23,21 +23,6 @@ class Reseaux extends Model{
                     ->first();
     }
 
-    // Vérifie si un numéro de téléphone appartient au réseau local (reseau_id = 1)
-    public function estNumeroLocal($telephone)
-    {
-        $prefixe = substr($telephone, 0, 3);
-
-        $config = $this->where('prefixe', $prefixe)
-                    ->first();
-
-        if (!$config) {
-            return false;
-        }
-
-        return $config['reseau_id'] == 1;
-    }
-
     public function getCommissionTransfert($telephone)
     {
         $prefixe = substr($telephone, 0, 3);
