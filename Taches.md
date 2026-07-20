@@ -20,7 +20,7 @@
     - [X] clients : id, numero_telephone , solde.   (Sundy)
     - [X] type_operations : id, nom (depot, retrait, transfert).    (Sundy)
     - [X] baremes_frais : id, type_operation_id, montant_min, montant_max, frais.   (Sundy)
-    - [X] mouvemens : id, type_operation_id, client_source_id (null si dépôt), client_destination_id (null si retrait ou dépôt), montant_brut, frais, montant_net, date_creation.   (Sundy)
+    - [X] mouvemens : id, type_operation_id, client_source_id (null si dépôt), client_destination_id (null si retrait ou dépôt), montant_brut, frais, date_creation.   (Sundy)
     - [X] operateurs : id, nom, mot_de_passe    (Sundy)
 - [X] Créer un seeder .     (Sundy)
 
@@ -37,9 +37,9 @@
 - [X] Tableau de bord Client :
 - [X] Afficher le numéro connecté et le solde actuel.
 - [ok] fonction pour Afficher le numéro connecté et le solde actuel.
-- [ok] fonction pour afficher l'historique des transactions du client (trié par date décroissante).
+- [ok] fonction pour afficher l'historique des mouvements du client (trié par date décroissante).
 - [X] Intégrer les formulaires pour les opérations (Dépôt, Retrait, Transfert).
-- [X] Afficher le tableau de l'historique des transactions du client (trié par date décroissante).
+- [X] Afficher le tableau de l'historique des mouvements du client (trié par date décroissante).
 
 ### Espace Opérateur
 
@@ -70,13 +70,13 @@
 - [X] création table réseaux
 
 ### Espace Client
-- [ ] Option "Inclure les frais de retrait" :
-- [ ] Modifier le formulaire de transfert pour ajouter une case à cocher (Checkbox).
-- [ ] Côté contrôleur (OperationsController), si cochée : calculer en plus les frais que le destinataire subira s'il retire cet argent, et les ajouter au total débité du compte source.
+- [ok] Option "Inclure les frais de retrait" :
+- [ok] Modifier le formulaire de transfert pour ajouter une case à cocher (Checkbox).
+- [ok] Côté contrôleur (OperationsController), si cochée : calculer en plus les frais que le destinataire subira s'il retire cet argent, et les ajouter au total débité du compte source.
 
-- [ ] Envoi multiple (Multi-transfert) :
-- [ ] Modifier l'interface pour permettre la saisie de plusieurs numéros séparés par des virgules ou via des champs dynamiques.
-- [ ] Côté contrôleur : diviser le montant brut saisi par le nombre de destinataires valides
+- [ok] Envoi multiple (Multi-transfert) :
+- [ok] Modifier l'interface pour permettre la saisie de plusieurs numéros séparés par des virgules ou via des champs dynamiques.
+- [ok] Côté contrôleur : diviser le montant brut saisi par le nombre de destinataires valides
 
 ### Espace Opérateur / Admin 
 - [X] Créer Model Reseau 
