@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\Clients;
+use App\Models\Operateurs;
+use App\Models\Configurations;
 
 class AuthController extends BaseController
 {
@@ -26,7 +29,7 @@ class AuthController extends BaseController
 
         $mot_de_passe_hash = password_hash($password, PASSWORD_DEFAULT);
 
-        $operateurModel = new \App\Models\Operateurs();
+        $operateurModel = new Operateurs();
 
         $operateur = $operateurModel
             ->getOperateurByNomAndPassword($username, $mot_de_passe_hash);
@@ -53,7 +56,17 @@ class AuthController extends BaseController
     {
         $telephone = $this->request->getPost('telephone');
 
-        $clientModel = new \App\Models\Clients();
+        $clientModel = new Clients();
+        $confirmationModel = new Configurations();
+
+        $prefixe = $confirmationModel->prefixeValide($telephone);
+        
+        if($prefixe === null) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Le numéro de téléphone n\'est pas valide.');
+        }
 
         $client = $clientModel
             ->getClientByNumeroTelephone($telephone);

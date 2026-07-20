@@ -139,3 +139,14 @@ body {
 .back-link:hover {
     text-decoration: underline;
 }
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+}

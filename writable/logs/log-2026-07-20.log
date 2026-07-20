@@ -13,3 +13,33 @@ in SYSTEMPATH/Database/SQLite3/Connection.php on line 163.
 11 SYSTEMPATH/Boot.php(442): CodeIgniter\CLI\Console->run()
 12 SYSTEMPATH/Boot.php(166): CodeIgniter\Boot::runCommand()
 13 ROOTPATH/spark(87): CodeIgniter\Boot::bootSpark()
+CRITICAL - 2026-07-20 08:00:57 --> Error: Cannot use object of type stdClass as array
+[Method: POST, Route: login/client]
+in APPPATH/Controllers/AuthController.php on line 66.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AuthController->authenticateClient()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+ 7 SYSTEMPATH/rewrite.php(44): require_once('/home/sundy/s4/SI/tp/finalS4/public/index.php')
+CRITICAL - 2026-07-20 08:03:24 --> Error: Cannot use object of type stdClass as array
+[Method: POST, Route: login/client]
+in APPPATH/Controllers/AuthController.php on line 66.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AuthController->authenticateClient()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+ 7 SYSTEMPATH/rewrite.php(44): require_once('/home/sundy/s4/SI/tp/finalS4/public/index.php')
+CRITICAL - 2026-07-20 08:13:21 --> Error: Cannot use object of type stdClass as array
+[Method: POST, Route: login/client]
+in APPPATH/Controllers/AuthController.php on line 79.
+ 1 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\AuthController->authenticateClient()
+ 2 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 3 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 4 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 6 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+ 7 SYSTEMPATH/rewrite.php(44): require_once('/home/sundy/s4/SI/tp/finalS4/public/index.php')

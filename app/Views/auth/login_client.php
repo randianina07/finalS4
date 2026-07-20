@@ -12,6 +12,12 @@
         <h1>Espace Client</h1>
         <p>Connectez-vous avec votre numéro de téléphone</p>
 
+        <?php if (session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger">
+                <?= session()->getFlashdata('error') ?>
+            </div>
+        <?php endif; ?>
+
         <form action="/login/client" method="post">
             <div class="form-group">
                 <label for="telephone">Numéro de téléphone</label>

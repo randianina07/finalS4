@@ -12,6 +12,12 @@
         <h1>Espace Opérateur</h1>
         <p>Connectez-vous avec vos identifiants</p>
 
+        <?php if (session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger">
+                <?= session()->getFlashdata('error') ?>
+            </div>
+        <?php endif; ?>
+
         <form action="/login/operateur" method="post">
             <div class="form-group">
                 <label for="nom">Nom</label>
