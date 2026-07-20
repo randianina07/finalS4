@@ -66,8 +66,8 @@
 
 ## Version 2
 ### Base de données & Migrations 
-- [ ] Mise à jour de configurations 
-- [] création table réseaux
+- [X] Mise à jour de configurations 
+- [X] création table réseaux
 
 ### Espace Client
 - [ ] Option "Inclure les frais de retrait" :
@@ -79,17 +79,17 @@
 - [ ] Côté contrôleur : diviser le montant brut saisi par le nombre de destinataires valides
 
 ### Espace Opérateur / Admin 
-- Créer Model Reseau 
-- [ ] Gestion des configurations étendues :
+- [X] Créer Model Reseau 
+- [X] Gestion des configurations étendues :
 
-    - [ ] Mettre à jour l'interface pour spécifier si le préfixe ajouté (ex: 032) est un "Autre Opérateur".
+    - [X] Mettre à jour l'interface pour spécifier si le préfixe ajouté (ex: 032) est un "Autre Opérateur".
 
-    - [ ] Ajouter un champ pour configurer le % de commission supplémentaire lié à ce préfixe externe.
+    - [X] Ajouter un champ pour configurer le % de commission supplémentaire lié à ce préfixe externe.
 
 - [ ] Tableau de bord des Gains :
 
     - [ ] Modifier la vue situation gains via les différents frais
-    - 
+    
  - [ ] Nouveau rapport de compensation :
 
     - [ ] Créer la fonction et la vue situation des montants à envoyer à chaque opérateur 
