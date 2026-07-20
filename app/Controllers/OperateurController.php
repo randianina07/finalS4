@@ -23,26 +23,91 @@ class OperateurController extends BaseController{
         return view('operateur/clients', $data);
     }
     
-    public function gains(){
-        $db = \Config\Database::connect();
-        $builder = $db->table('mouvements t');
-       $builder->select('t.type_operation_id, sum(t.frais) as total_frais');
-        $builder->whereIn('t.type_operation_id', [2, 3]);
-        $builder->groupBy('t.type_operation_id');
+    // public function gains(){
+    //     $db = \Config\Database::connect();
+    //     $builder = $db->table('mouvements t');
+    //     $builder->select('t.type_operation_id, sum(t.frais) as total_frais');
+    //     $builder->whereIn('t.type_operation_id', [2, 3]);
+    //     $builder->groupBy('t.type_operation_id');
         
+    //     $gainsParType = $builder->get()->getResultArray();
+
+    //     $gainsParReseau = [];
+
+    //     $totalGeneral = 0;
+    //     foreach ($gainsParType as $gain) {
+    //         $totalGeneral += (float) $gain['total_frais'];
+    //     }
+
+    //     $data = [
+    //         'gains' => $gainsParType,
+    //         'total_general' => $totalGeneral
+    //     ];
+
+    //     return view('operateur/gains', $data);
+    // }
+
+    public function gains()
+    {
+        $db = \Config\Database::connect();
+
+        $builder = $db->table('mouvements m');
+        $builder->select('t.nom, SUM(m.frais) as total_frais');
+        $builder->join(
+            'type_operations t',
+            't.id = m.type_operation_id'
+        );
+        $builder->whereIn(
+            'm.type_operation_id',
+            [2,3]
+        );
+        $builder->groupBy('t.nom');
+
         $gainsParType = $builder->get()->getResultArray();
 
+        $builder = $db->table('mouvements m');
+        $builder->select('
+            r.nom as reseau,
+            SUM(m.frais) as gain
+        ');
+        $builder->join(
+            'clients c',
+            'c.id = m.client_destination_id',
+            'left'
+        );
+        $builder->join(
+            'configurations conf',
+            "conf.prefixe = substr(c.numero_telephone,1,3)",
+            'left'
+        );
+        $builder->join(
+            'reseaux r',
+            'r.id = conf.reseau_id',
+            'left'
+        );
+        $builder->where(
+            'm.type_operation_id',
+            3
+        );
+        $builder->groupBy('r.nom');
+
+        $gainsParReseau = $builder->get()->getResultArray();
+
         $totalGeneral = 0;
-        foreach ($gainsParType as $gain) {
-            $totalGeneral += (float) $gain['total_frais'];
+
+        foreach($gainsParType as $gain)
+        {
+            $totalGeneral += $gain['total_frais'];
         }
 
-        $data = [
-            'gains' => $gainsParType,
-            'total_general' => $totalGeneral
-        ];
-
-        return view('operateur/gains', $data);
+        return view(
+            'operateur/gains',
+            [
+                'gains' => $gainsParType,
+                'gains_reseaux' => $gainsParReseau,
+                'total_general' => $totalGeneral
+            ]
+        );
     }
     
     public function ajouterPrefixe()

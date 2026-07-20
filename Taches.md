@@ -86,9 +86,9 @@
 
     - [X] Ajouter un champ pour configurer le % de commission supplémentaire lié à ce préfixe externe.
 
-- [ ] Tableau de bord des Gains :
+- [X] Tableau de bord des Gains :
 
-    - [ ] Modifier la vue situation gains via les différents frais
+    - [X] Modifier la vue situation gains via les différents frais
     
  - [ ] Nouveau rapport de compensation :
 
