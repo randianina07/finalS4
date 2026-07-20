@@ -20,9 +20,15 @@ class CreateConfigurations extends Migration
                 'null' => false,
                 'unique' => true,
             ],
+            'reseau_id' => [
+                'type' => 'INTEGER',
+                'unsigned' => true,
+                'null' => false,
+            ],
         ]);
 
         $this->forge->addKey('id', true);
+        $this->forge->addForeignKey('reseau_id', 'reseaux', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('configurations');
     }
 
