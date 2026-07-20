@@ -23,7 +23,7 @@ class OperationsController extends BaseController
             ->increment('solde', $montant);
 
         $dataTransaction = [
-            'type_operation_id'      => 1, // 1 = Dépôt
+            'type_operation_id'      => 1, 
             'client_source_id'       => null,
             'client_destination_id'  => $clientId,
             'montant_brut'           => $montant,

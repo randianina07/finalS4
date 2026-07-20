@@ -6,13 +6,14 @@
 
 - **X** pour Sundy
 - **ok** pour Randi
+
 - [ok] Initialiser le dépôt Git public (Randi)
 - [ok] init models dans le projet (Randi)
     - [ok] configurations : Pour stocker les préfixes valides (ex: 033, 037).
     - [ok] clients : id, numero_telephone , solde.
     - [ok] type_operations : id, nom (depot, retrait, transfert).
     - [ok] baremes_frais : id, type_operation_id, montant_min, montant_max, frais.
-    - [ok] mouvement : id, type_operation_id, client_source_id (null si dépôt), client_destination_id (null si retrait ou dépôt), montant_brut, frais, date_creation.
+    - [ok] mouvements : id, type_operation_id, client_source_id (null si dépôt), client_destination_id (null si retrait ou dépôt), montant_brut, frais, date_creation.
 - [X] Configurer CodeIgniter  pour utiliser SQLite (Sundy)
 - [X] Créer les Migrations pour la base de données :  (Sundy)
 - [X] configurations : Pour stocker les préfixes valides (ex: 033, 037).    (Sundy)
@@ -35,8 +36,10 @@
 
 - [ ] Tableau de bord Client :
 - [ ] Afficher le numéro connecté et le solde actuel.
+- [ok] fonction pour Afficher le numéro connecté et le solde actuel.
+- [ok] fonction pour afficher l'historique des transactions du client (trié par date décroissante).
 - [ ] Intégrer les formulaires pour les opérations (Dépôt, Retrait, Transfert).
-- [ ] Afficher le tableau de l'historique des transactions du client (trié par date décroissante).
+- [] Afficher le tableau de l'historique des transactions du client (trié par date décroissante).
 
 ## Espace Opérateur
 
