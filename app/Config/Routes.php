@@ -44,4 +44,11 @@ $routes->group('operateur', ['filter' => 'operateur'], function($routes){
     $routes->get('prefixes', 'OperateurController::prefixes');
     $routes->post('prefixes/ajouter', 'OperateurController::ajouterPrefixe');
     $routes->get('prefixes/supprimer/(:num)', 'OperateurController::supprimerPrefixe/$1');
+
+    $routes->get('reseaux', 'ReseauController::listerReseaux');
+    $routes->post('reseaux/ajouter', 'ReseauController::ajouterReseau');
+    $routes->get('reseaux/supprimer/(:num)', 'ReseauController::supprimerReseau/$1');
+    $routes->post('reseaux/modifier/(:num)', 'ReseauController::modifierReseau/$1');
+
+    $routes->get('montants', 'OperateurController::montants');
 });

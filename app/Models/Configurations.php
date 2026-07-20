@@ -8,13 +8,16 @@ class Configurations extends Model{
 
     protected $primaryKey = 'id';
     protected $allowedFields = [
-        'prefixe'
+        'prefixe',
+        'reseau_id'
     ];
 
     public function prefixeValide($telephone)
     {
         $prefixe = substr($telephone, 0, 3);
-        return $this->where('prefixe', $prefixe)->first();
+        return $this->where('prefixe', $prefixe)
+                ->where('reseau_id', 1)
+                ->first();
     }
 
 }

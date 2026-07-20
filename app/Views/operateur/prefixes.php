@@ -7,8 +7,14 @@
 
         <form method="post" action="/operateur/prefixes/ajouter" class="inline-form">
             <div class="form-group">
-                <label>Préfixe (ex: 034)</label>
+                <label>Préfixe</label>
                 <input type="text" name="prefixe" maxlength="10" required>
+                <label>Réseau</label>
+                <select name="reseau" id="reseau">
+                    <?php foreach ($reseaux as $reseau): ?>
+                        <option value="<?= esc($reseau['id']) ?>"><?= esc($reseau['nom']) ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
             <button type="submit" class="btn btn-submit">Ajouter</button>
         </form>
@@ -28,6 +34,7 @@
                     <thead>
                         <tr>
                             <th>Préfixe</th>
+                            <th>Nom Réseau</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -35,6 +42,7 @@
                         <?php foreach ($prefixes as $p): ?>
                             <tr>
                                 <td><?= esc($p['prefixe']) ?></td>
+                                <td><?= esc($p['nom_reseau']) ?></td>
                                 <td>
                                     <a class="btn-delete" href="/operateur/prefixes/supprimer/<?= $p['id'] ?>"
                                        onclick="return confirm('Supprimer ce préfixe ?');">Supprimer</a>

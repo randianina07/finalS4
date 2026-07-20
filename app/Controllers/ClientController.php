@@ -6,7 +6,7 @@ class ClientController extends BaseController
 {
     public function getHistorique()
     {
-        $clientId = session()->get('user_id');
+        $clientId = session()->get('client_id');
         $db = \Config\Database::connect();
         
         $builder = $db->table("mouvements t");
@@ -39,7 +39,7 @@ class ClientController extends BaseController
 
     public function getSolde()
     {
-        $clientId = session()->get('user_id');
+        $clientId = session()->get('client_id');
         $db = \Config\Database::connect();
         
         $client = $db->table('clients')
