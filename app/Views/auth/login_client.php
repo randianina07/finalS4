@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Client</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Espace Client</h1>
+        <p>Connectez-vous avec votre numéro de téléphone</p>
+
+        <form action="/login/client" method="post">
+            <div class="form-group">
+                <label for="numero_telephone">Numéro de téléphone</label>
+                <input type="tel" id="numero_telephone" name="numero_telephone" required>
+            </div>
+            <button type="submit" class="btn btn-submit">Se connecter</button>
+        </form>
+
+        <a href="/" class="back-link">&larr; Retour à l'accueil</a>
+    </div>
+
+</body>
+</html>
