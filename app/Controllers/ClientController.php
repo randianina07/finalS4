@@ -59,4 +59,20 @@ class ClientController extends BaseController
         ];
         return view('client/dashboard', $data);
     }
+
+    public function dashboard(){
+        return view('client/dashboard');
+    }
+
+    public function depot(){
+        return view('client/depot');
+    }
+
+    public function retrait(){
+        return view('client/retrait');
+    }
+
+    public function transfert(){
+        return view('client/transfert');
+    }
 }

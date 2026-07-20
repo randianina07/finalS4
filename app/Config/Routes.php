@@ -17,6 +17,15 @@ $routes->get('/logout', 'AuthController::logout');
 
 $routes->group('client', ['filter' => 'client'], function($routes){
     $routes->get('dashboard', 'ClientController::dashboard');
+
+    $routes->get('depot','ClientController::depot');
+    $routes->post('depot','OperationsController::depot');
+
+    $routes->get('retrait','ClientController::retrait');
+    $routes->post('retrait','OperationsController::retrait');
+
+    $routes->get('transfert','ClientController::transfert');
+    $routes->post('transfert','OperationsController::transfert');
 });
 
 $routes->group('operateur', ['filter' => 'operateur'], function($routes){

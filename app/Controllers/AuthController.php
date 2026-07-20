@@ -38,7 +38,7 @@ class AuthController extends BaseController
         if ($operateur) {
 
             session()->set([
-                'operateur_id' => $operateur['id'],
+                'operateur_id' => $operateur->id,
                 'operateur' => $operateur
             ]);
 
@@ -76,11 +76,11 @@ class AuthController extends BaseController
         }
 
         session()->set([
-            'client_id' => $client['id'],
+            'client_id' => $client->id,
             'client' => $client
         ]);
 
-        return redirect()->to('/dashboard/client');
+        return redirect()->to('/client/dashboard');
     }
 
     public function logout()
