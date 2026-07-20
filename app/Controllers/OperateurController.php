@@ -145,7 +145,10 @@ class OperateurController extends BaseController{
     {
         $db = \Config\Database::connect();
         $builder = $db->table('configurations');
-        $prefixes = $builder->get()->getResultArray();
+        $prefixes = $builder->select('configurations.*, reseaux.nom as nom_reseau')
+            ->join('reseaux', 'configurations.reseau_id = reseaux.id')
+            ->get()
+            ->getResultArray();
 
         return view('operateur/prefixes', ['prefixes' => $prefixes]);
     }
