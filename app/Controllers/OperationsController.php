@@ -156,4 +156,8 @@ class OperationsController extends BaseController
             return redirect()->back()->with('success', "Transfert de {$montant} vers le {$numeroDestinataire} effectué avec succès. Frais : {$frais}.");
         }
     }
+
+    public function transfertRetrait(){
+        
+    }
 }
