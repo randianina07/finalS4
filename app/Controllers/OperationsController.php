@@ -23,7 +23,7 @@ class OperationsController extends BaseController
             ->increment('solde', $montant);
 
         $dataTransaction = [
-            'type_operation_id'      => 1, 
+            'type_operation_id'      => 1, // 1 = Dépôt
             'client_source_id'       => null,
             'client_destination_id'  => $clientId,
             'montant_brut'           => $montant,
@@ -146,6 +146,7 @@ class OperationsController extends BaseController
             'date_creation'          => date('Y-m-d H:i:s')
         ];
         $db->table('transactions')->insert($dataTransaction);
+
 
         if ($db->transStatus() === false) {
             $db->transRollback();
