@@ -11,4 +11,14 @@ class Reseaux extends Model{
         'nom',
         'commission_transfert'
     ];
+
+    public function getReseauByTelephone($telephone)
+    {
+        $prefixe = substr($telephone, 0, 3);
+
+        return $this->select('configurations.*, reseaux.nom, reseaux.commission_transfert')
+                    ->join('reseaux', 'reseaux.id = configurations.reseau_id')
+                    ->where('configurations.prefixe', $prefixe)
+                    ->first();
+    }
 }
