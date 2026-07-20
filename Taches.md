@@ -16,6 +16,15 @@
     - [ok] type_operations : id, nom (depot, retrait, transfert).
     - [ok] baremes_frais : id, type_operation_id, montant_min, montant_max, frais.
     - [ok] mouvement : id, type_operation_id, client_source_id (null si dépôt), client_destination_id (null si retrait ou dépôt), montant_brut, frais, date_creation.
+- [X] Initialiser le dépôt Git public 
+- [X] Configurer CodeIgniter  pour utiliser SQLite
+- [X] Créer les Migrations pour la base de données :
+- [X] configurations : Pour stocker les préfixes valides (ex: 033, 037).
+- [X] clients : id, numero_telephone , solde.
+- [X] type_operations : id, nom (depot, retrait, transfert).
+- [X] baremes_frais : id, type_operation_id, montant_min, montant_max, frais.
+- [X] mouvemens : id, type_operation_id, client_source_id (null si dépôt), client_destination_id (null si retrait ou dépôt), montant_brut, frais, montant_net, date_creation.
+- [X] Créer un seeder .
 
 ## Espace Client (Authentification & Vues)
 - [ ] Connexion automatique :
