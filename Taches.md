@@ -90,6 +90,6 @@
 
     - [X] Modifier la vue situation gains via les différents frais
     
- - [ ] Nouveau rapport de compensation :
+ - [X] Nouveau rapport de compensation :
 
-    - [ ] Créer la fonction et la vue situation des montants à envoyer à chaque opérateur 
+    - [X] Créer la fonction et la vue situation des montants à envoyer à chaque opérateur 
