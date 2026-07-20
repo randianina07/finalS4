@@ -1,6 +1,11 @@
 # A faire
+
 ## Version 1
+
 ## Initialisation & Base de Données
+
+- **X** pour Sundy
+- **ok** pour Randi
 - [ok] Initialiser le dépôt Git public (Randi)
 - [ok] init models dans le projet (Randi)
     - [ok] configurations : Pour stocker les préfixes valides (ex: 033, 037).
@@ -19,6 +24,7 @@
 - [X] Créer un seeder .     (Sundy)
 
 ## Espace Client (Authentification & Vues)
+
 - [ ] Connexion automatique :
 - [ ] Créer un formulaire demandant uniquement le numéro de téléphone.
 - [ ] Logique Controller : Si le numéro commence par un préfixe valide :
@@ -32,15 +38,20 @@
 - [ ] Intégrer les formulaires pour les opérations (Dépôt, Retrait, Transfert).
 - [ ] Afficher le tableau de l'historique des transactions du client (trié par date décroissante).
 
-## Espace Opérateur 
+## Espace Opérateur
+
 - [ ] Créer une zone "Admin/Opérateur" .
-- [ ] Implémenter la fonction Dépôt 
-- [ ] Implémenter la fonction Retrait 
-- [ ] Implémenter la fonction Transfert
+- [ok] Implémenter la fonction Dépôt (Randi)
+- [ok] Implémenter la fonction Retrait (Randi)
+- [ok] Implémenter la fonction Transfert (Randi)
 - [ ] Gestion des configurations :
-- [ ] Interface pour ajouter/supprimer les préfixes valides (ex: ajouter 034).
+- [] fonctions pour ajouter/supprimer les préfixes valides 
+- [ ] Interface pour ajouter/supprimer les préfixes valides 
 - [ ] Gestion des barèmes :
 - [ ] Interface CRUD pour modifier les tranches de frais par type d'opération.
+- [] fonctions pour modifier les tranches de frais par type d'opération.
 - [ ] Tableaux de bord de situation :
-- [ ] Situation des gains : Afficher la somme totale des frais perçus, filtrable par type (Retrait vs Transfert).
-- [ ] Situation des comptes : Liste de tous les clients avec leur numéro et leur solde actuel.
+- [ok] fonction situation des gains : 
+- [ok] fonction situation des comptes
+- [] vue situation des gains : Afficher la somme totale des frais perçus
+- [] vue situation des comptes  : Liste de tous les clients avec leur numéro et leur solde actuel.

@@ -14,4 +14,13 @@ class BaremesFrais extends Model{
         'frais'
     ];
 
+    public function getFrais($typeOperationId, $montant)
+    {
+        $row = $this->where('type_operation_id', $typeOperationId)
+                    ->where('montant_min <=', $montant)
+                    ->where('montant_max >=', $montant)
+                    ->first();
+
+        return $row ? (float) $row['frais'] : 0.0;
+    }
 }
