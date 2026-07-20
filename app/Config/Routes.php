@@ -49,4 +49,6 @@ $routes->group('operateur', ['filter' => 'operateur'], function($routes){
     $routes->post('reseaux/ajouter', 'ReseauController::ajouterReseau');
     $routes->get('reseaux/supprimer/(:num)', 'ReseauController::supprimerReseau/$1');
     $routes->post('reseaux/modifier/(:num)', 'ReseauController::modifierReseau/$1');
+
+    $routes->get('montants', 'OperateurController::montants');
 });
