@@ -24,10 +24,12 @@ class AuthController extends BaseController
         $username = $this->request->getPost('nom');
         $password = $this->request->getPost('mot_de_passe');
 
+        $mot_de_passe_hash = password_hash($password, PASSWORD_DEFAULT);
+
         $operateurModel = new \App\Models\Operateurs();
 
         $operateur = $operateurModel
-            ->getOperateurByNomAndPassword($username, $password);
+            ->getOperateurByNomAndPassword($username, $mot_de_passe_hash);
 
 
         if ($operateur) {

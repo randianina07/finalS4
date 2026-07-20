@@ -14,8 +14,8 @@
 
         <form action="/login/client" method="post">
             <div class="form-group">
-                <label for="numero_telephone">Numéro de téléphone</label>
-                <input type="tel" id="numero_telephone" name="numero_telephone" required>
+                <label for="telephone">Numéro de téléphone</label>
+                <input type="tel" id="telephone" name="telephone" required>
             </div>
             <button type="submit" class="btn btn-submit">Se connecter</button>
         </form>
