@@ -3,6 +3,8 @@
 namespace App\Controllers;
 use App\Models\BaremesFrais;
 use App\Models\Clients;
+use App\Models\Mouvements;
+
 class OperateurController extends BaseController{
     public function index(){}
 
@@ -17,13 +19,13 @@ class OperateurController extends BaseController{
             'pager'   => $clientModel->pager
         ];
     
-        return view('admin/clients', $data);
+        return view('operateur/clients', $data);
     }
     
     public function gains(){
         $db = \Config\Database::connect();
-        $builder = $db->table('mouvements m');
-       $builder->select('t.type_operation_id, sum(t.frais_appliques) as total_frais');
+        $builder = $db->table('mouvements t');
+       $builder->select('t.type_operation_id, sum(t.frais) as total_frais');
         $builder->whereIn('t.type_operation_id', [2, 3]);
         $builder->groupBy('t.type_operation_id');
         
@@ -39,8 +41,9 @@ class OperateurController extends BaseController{
             'total_general' => $totalGeneral
         ];
 
-        return view('admin/gains', $data);
+        return view('operateur/gains', $data);
     }
+    
     public function ajouterPrefixe()
     {
         $prefixe = trim($this->request->getPost('prefixe'));
@@ -67,9 +70,13 @@ class OperateurController extends BaseController{
     public function baremes()
     {
         $baremeModel = new BaremesFrais();
-        $baremes = $baremeModel->orderBy('type_operation_id', 'ASC')->orderBy('montant_min', 'ASC')->findAll();
+        $baremes = $baremeModel->select('baremes_frais.*, type_operations.nom as nom_operation')
+            ->join('type_operations', 'baremes_frais.type_operation_id = type_operations.id')
+            ->orderBy('type_operations.nom', 'ASC')
+            ->orderBy('baremes_frais.montant_min', 'ASC')
+            ->findAll();
 
-        return view('admin/baremes', ['baremes' => $baremes]);
+        return view('operateur/baremes', ['baremes' => $baremes]);
     }
 
     public function enregistrerBareme()
@@ -92,7 +99,7 @@ class OperateurController extends BaseController{
             $msg = "Nouvelle tranche ajoutée !";
         }
 
-        return redirect()->to('/admin/baremes')->with('success', $msg);
+        return redirect()->to('/operateur/baremes')->with('success', $msg);
     }
 
     public function supprimerBareme($id)
@@ -101,5 +108,45 @@ class OperateurController extends BaseController{
         $baremeModel->delete($id);
 
         return redirect()->back()->with('success', "Tranche de barème supprimée.");
+    }
+
+    public function dashboard()
+    {
+        $clientModel = new Clients();
+        $transactionModel = new Mouvements();
+
+        $nbClients = $clientModel->countAll();
+
+
+        $nbOperations = $transactionModel->countAll();
+
+        $totalGains = $transactionModel
+            ->selectSum('frais')
+            ->first();
+
+
+        $data = [
+
+            'title' => 'Dashboard Opérateur',
+
+            'nbClients' => $nbClients,
+
+            'nbOperations' => $nbOperations,
+
+            'totalGains' => $totalGains['frais'] ?? 0
+
+        ];
+
+
+        return view('operateur/dashboard', $data);
+    }
+
+    public function prefixes()
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('configurations');
+        $prefixes = $builder->get()->getResultArray();
+
+        return view('operateur/prefixes', ['prefixes' => $prefixes]);
     }
 }

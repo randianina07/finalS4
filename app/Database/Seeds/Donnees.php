@@ -102,11 +102,11 @@ class Donnees extends Seeder
         $this->db->table('operateurs')->insertBatch([
             [
                 'nom' => 'Operateur1',
-                'mot_de_passe' => password_hash('password1', PASSWORD_DEFAULT)
+                'mot_de_passe' => 'password1'
             ],
             [
                 'nom' => 'Operateur2',
-                'mot_de_passe' => password_hash('password2', PASSWORD_DEFAULT)
+                'mot_de_passe' => 'password2'
             ],
         ]);
     }

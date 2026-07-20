@@ -27,12 +27,10 @@ class AuthController extends BaseController
         $username = $this->request->getPost('nom');
         $password = $this->request->getPost('mot_de_passe');
 
-        $mot_de_passe_hash = password_hash($password, PASSWORD_DEFAULT);
-
         $operateurModel = new Operateurs();
 
         $operateur = $operateurModel
-            ->getOperateurByNomAndPassword($username, $mot_de_passe_hash);
+            ->getOperateurByNomAndPassword($username, $password);
 
 
         if ($operateur) {
@@ -42,7 +40,7 @@ class AuthController extends BaseController
                 'operateur' => $operateur
             ]);
 
-            return redirect()->to('/dashboard/operateur');
+            return redirect()->to('/operateur/dashboard');
         }
 
 
