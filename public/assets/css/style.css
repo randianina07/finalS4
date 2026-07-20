@@ -201,3 +201,309 @@ body {
     border-radius:5px;
     margin-bottom:15px;
 }
+/* ================= LAYOUT DASHBOARD (client & opérateur) ================= */
+
+body.app-body {
+    display: block;
+    align-items: unset;
+    justify-content: unset;
+    min-height: 100vh;
+    padding: 0;
+}
+
+.app-shell {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+}
+
+/* Le container par défaut reste utilisé pour login/accueil (centré, étroit) */
+.app-shell .container {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    text-align: left;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 18px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.topbar .brand {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2d2d2d;
+}
+
+.topbar .brand span {
+    color: #764ba2;
+}
+
+.topbar nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.topbar nav a {
+    text-decoration: none;
+    color: #2d2d2d;
+    background: #f4f4f8;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.topbar nav a:hover {
+    background: #667eea;
+    color: #ffffff;
+}
+
+.topbar nav a.logout {
+    background: #fdeaea;
+    color: #c0392b;
+}
+
+.topbar nav a.logout:hover {
+    background: #c0392b;
+    color: #ffffff;
+}
+
+.page-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 32px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+    margin-bottom: 24px;
+}
+
+.page-card h2 {
+    color: #2d2d2d;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+}
+
+/* --- Carte solde --- */
+.solde-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.35);
+}
+
+.solde-card .label {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin-bottom: 6px;
+}
+
+.solde-card .montant {
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.solde-card .numero {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* --- Grille d'actions rapides --- */
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.action-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 24px 12px;
+    text-decoration: none;
+    color: #2d2d2d;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.action-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(102, 126, 234, 0.25);
+}
+
+.action-card .action-icon {
+    font-size: 1.8rem;
+}
+
+/* --- Stat boxes (dashboard opérateur) --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-box {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+    border-left: 5px solid #667eea;
+}
+
+.stat-box .stat-label {
+    font-size: 0.82rem;
+    color: #6b6b6b;
+    margin-bottom: 6px;
+}
+
+.stat-box .stat-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #2d2d2d;
+}
+
+/* --- Tables --- */
+.table-wrap {
+    overflow-x: auto;
+}
+
+table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+}
+
+table.data-table th, table.data-table td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid #eeeef2;
+}
+
+table.data-table th {
+    background: #f4f4f8;
+    color: #2d2d2d;
+    font-weight: 700;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+table.data-table tbody tr:hover {
+    background: #faf9ff;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.badge-depot { background: #d4edda; color: #155724; }
+.badge-retrait { background: #fdeaea; color: #c0392b; }
+.badge-transfert { background: #e3e6fd; color: #4834d4; }
+
+.empty-state {
+    text-align: center;
+    color: #6b6b6b;
+    padding: 30px 0;
+    font-size: 0.95rem;
+}
+
+/* --- Formulaire inline (barèmes / préfixes) --- */
+.inline-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-end;
+    margin-bottom: 24px;
+}
+
+.inline-form .form-group {
+    margin-bottom: 0;
+    flex: 1;
+    min-width: 130px;
+}
+
+.inline-form .btn-submit {
+    width: auto;
+    padding: 12px 22px;
+}
+
+.btn-delete {
+    background: #fdeaea;
+    color: #c0392b;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.btn-delete:hover {
+    background: #c0392b;
+    color: #ffffff;
+}
+
+.btn-edit {
+    background: #e3e6fd;
+    color: #4834d4;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-edit:hover {
+    background: #4834d4;
+    color: #ffffff;
+}
+
+.pagination-links {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.pagination-links a, .pagination-links span {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: #f4f4f8;
+    color: #2d2d2d;
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.pagination-links a:hover {
+    background: #667eea;
+    color: #ffffff;
+}

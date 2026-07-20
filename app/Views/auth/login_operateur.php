@@ -21,11 +21,11 @@
         <form action="/login/operateur" method="post">
             <div class="form-group">
                 <label for="nom">Nom</label>
-                <input type="text" id="nom" name="nom" required>
+                <input type="text" id="nom" name="nom" value="Operateur1" required>
             </div>
             <div class="form-group">
                 <label for="mot_de_passe">Mot de passe</label>
-                <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+                <input type="password" id="mot_de_passe" name="mot_de_passe" value="password1" required>
             </div>
             <button type="submit" class="btn btn-submit">Se connecter</button>
         </form>
