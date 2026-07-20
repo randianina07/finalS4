@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\BaremesFrais;
 use App\Models\Clients;
 use App\Models\Mouvements;
+use App\Models\Reseaux;
 
 class OperateurController extends BaseController{
     public function index(){}
@@ -47,13 +48,14 @@ class OperateurController extends BaseController{
     public function ajouterPrefixe()
     {
         $prefixe = trim($this->request->getPost('prefixe'));
+        $reseau_id = $this->request->getPost('reseau');
 
         if (empty($prefixe) || !is_numeric($prefixe)) {
             return redirect()->back()->with('error', 'Le préfixe doit être numérique (ex: 037).');
         }
 
         $db = \Config\Database::connect();
-        $db->table('configurations')->insert(['prefixe' => $prefixe]);
+        $db->table('configurations')->insert(['prefixe' => $prefixe, 'reseau_id' => $reseau_id]);
 
         return redirect()->back()->with('success', "Préfixe {$prefixe} ajouté !");
     }
@@ -149,7 +151,10 @@ class OperateurController extends BaseController{
             ->join('reseaux', 'configurations.reseau_id = reseaux.id')
             ->get()
             ->getResultArray();
+        
+        $reseauxModel = new Reseaux();
+        $reseaux = $reseauxModel->getAllReseaux();
 
-        return view('operateur/prefixes', ['prefixes' => $prefixes]);
+        return view('operateur/prefixes', ['prefixes' => $prefixes, 'reseaux' => $reseaux]);
     }
 }

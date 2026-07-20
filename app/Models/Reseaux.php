@@ -37,4 +37,23 @@ class Reseaux extends Model{
 
         return $config['reseau_id'] == 1;
     }
+
+    public function getCommissionTransfert($telephone)
+    {
+        $prefixe = substr($telephone, 0, 3);
+
+        $config = $this->where('prefixe', $prefixe)
+                    ->first();
+
+        if (!$config) {
+            return null; // ou une valeur par défaut
+        }
+
+        return $config['commission_transfert'];
+    }
+
+    public function getAllReseaux()
+    {
+        return $this->findAll();
+    }
 }
