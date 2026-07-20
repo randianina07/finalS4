@@ -12,6 +12,7 @@ class Reseaux extends Model{
         'commission_transfert'
     ];
 
+    // Récupère le réseau associé à un numéro de téléphone donné
     public function getReseauByTelephone($telephone)
     {
         $prefixe = substr($telephone, 0, 3);
@@ -20,5 +21,20 @@ class Reseaux extends Model{
                     ->join('reseaux', 'reseaux.id = configurations.reseau_id')
                     ->where('configurations.prefixe', $prefixe)
                     ->first();
+    }
+
+    // Vérifie si un numéro de téléphone appartient au réseau local (reseau_id = 1)
+    public function estNumeroLocal($telephone)
+    {
+        $prefixe = substr($telephone, 0, 3);
+
+        $config = $this->where('prefixe', $prefixe)
+                    ->first();
+
+        if (!$config) {
+            return false;
+        }
+
+        return $config['reseau_id'] == 1;
     }
 }
