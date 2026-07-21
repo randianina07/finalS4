@@ -93,5 +93,10 @@
  - [X] Nouveau rapport de compensation :
 
     - [X] Créer la fonction et la vue situation des montants à envoyer à chaque opérateur 
+
+- [ ] Epargne
+- [X] Fonction effectuerTran
+    Choix de pourcentage par client(page client)
+    Quand je reçois de l'argent , le pourcentage epargne dans epargne et le reste dans le solde
     
 - [] promotion de pourcentage de transfert vers meme opérateur , page de modification de pourcentage 

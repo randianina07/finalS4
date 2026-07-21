@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\BaremesFrais;
 use App\Models\Reseaux;
+use App\Models\PourcentageEpargne;
 
 class OperationsController extends BaseController
 {
@@ -264,6 +265,26 @@ class OperationsController extends BaseController
         $coutTotalEmetteur += $coutPourCeDest;
 
         $montantPourDestinataire = $montantParDestinataire + $fraisRetraitOptionnel;
+        
+        // Division epargne et solde
+        $pcEpargneModel = new PourcentageEpargne();
+        $pcEpargne = $pcEpargneModel->getPcEpargneByClient($dest['id']);
+        if($pcEpargne != null){
+            $montantEpargne = $montantParDestinataire * ($pcEpargne['pourcentage']/100);
+            $montantSolde = $montantParDestinataire - $montantEpargne;
+
+            $detailsTransferts[] = [
+                'destinataire'        => $dest,
+                'numero'              => $numero,
+                'est_local'           => $estLocal,
+                'montant_brut'        => $montantSolde,
+                'frais_totaux'        => $fraisTransfert,
+                'montant_recu_solde'  => $montantPourDestinataire,
+                'total_debit'         => $coutPourCeDest,
+                'montantEpargne'=> $montantEpargne
+            ];
+
+        }
 
         $detailsTransferts[] = [
             'destinataire'        => $dest,
@@ -304,6 +325,11 @@ class OperationsController extends BaseController
             'montant_brut'          => $transfert['montant_brut'],
             'frais'                 => $transfert['frais_totaux'],
             'date_creation'         => date('Y-m-d H:i:s')
+        ]);
+
+        $db->table('epargne')->insert([
+            'client_id' => $transfert['destinataire']['id'],
+            'montant'   => $transfert['montantEpargne']
         ]);
     }
 

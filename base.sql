@@ -45,6 +45,18 @@ CREATE TABLE reseaux (
     commission_transfert REAL NOT NULL DEFAULT 0.0
 );
 
+CREATE TABLE epargne (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    client_id INTEGER,
+    montant REAL NOT NULL DEFAULT 0
+);
+
+CREATE TABLE pourcentage_epargne (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    client_id INTEGER,
+    pourcentage REAL NOT NULL DEFAULT 0.0
+);
+
 INSERT INTO `configurations` (`prefixe`) VALUES 
 ('033'),
 ('037');
