@@ -3,24 +3,26 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Reseaux extends Model{
+class Reseaux extends Model {
     protected $table = 'reseaux';
-
     protected $primaryKey = 'id';
     protected $allowedFields = [
         'nom',
         'commission_transfert'
     ];
 
-    // Récupère le réseau associé à un numéro de téléphone donné
+    // Récupère la config + le réseau associé à un numéro
     public function getReseauByTelephone($telephone)
     {
         $prefixe = substr($telephone, 0, 3);
 
-        return $this->select('configurations.*, reseaux.nom, reseaux.commission_transfert')
-                    ->join('reseaux', 'reseaux.id = configurations.reseau_id')
-                    ->where('configurations.prefixe', $prefixe)
-                    ->first();
+        $db = \Config\Database::connect();
+        return $db->table('configurations')
+                  ->select('configurations.*, reseaux.nom, reseaux.commission_transfert')
+                  ->join('reseaux', 'reseaux.id = configurations.reseau_id')
+                  ->where('configurations.prefixe', $prefixe)
+                  ->get()
+                  ->getRowArray();
     }
 
     // Vérifie si un numéro de téléphone appartient au réseau local (reseau_id = 1)
@@ -28,33 +30,33 @@ class Reseaux extends Model{
     {
         $prefixe = substr($telephone, 0, 3);
 
-        $config = $this->where('prefixe', $prefixe)
-                    ->first();
+        $db = \Config\Database::connect();
+        $config = $db->table('configurations')
+                     ->where('prefixe', $prefixe)
+                     ->get()
+                     ->getRowArray();
 
         if (!$config) {
             return false;
         }
 
-        return $config['reseau_id'] == 1;
+        return (int)$config['reseau_id'] === 1;
     }
 
+    // Récupère la commission de transfert liée au réseau du numéro
     public function getCommissionTransfert($telephone)
     {
-        $prefixe = substr($telephone, 0, 3);
+        $reseauInfo = $this->getReseauByTelephone($telephone);
 
-        $config = $this->where('prefixe', $prefixe)
-                    ->first();
-
-        if (!$config) {
-            return null; // ou une valeur par défaut
+        if (!$reseauInfo) {
+            return 0; // Pas de commission si non trouvé
         }
 
-        return $config['commission_transfert'];
+        return $reseauInfo['commission_transfert'];
     }
 
     public function getAllReseaux()
     {
         return $this->findAll();
     }
-  
 }

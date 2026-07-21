@@ -25,7 +25,7 @@ $routes->group('client', ['filter' => 'client'], function($routes){
     $routes->post('retrait','OperationsController::retrait');
 
     $routes->get('transfert','ClientController::transfert');
-    $routes->post('transfert','OperationsController::transfert');
+    $routes->post('transfert','OperationsController::effectuerTransfert');
 
     $routes->get('historique', 'ClientController::getHistorique');
 });
