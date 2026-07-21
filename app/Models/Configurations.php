@@ -20,4 +20,28 @@ class Configurations extends Model{
                 ->first();
     }
 
+    public function estNumeroLocal($telephone)
+    {
+        $prefixe = substr(trim($telephone), 0, 3);
+
+        return $this->where('prefixe', $prefixe)->countAllResults() > 0;
+    }
+
+    public function getReseauNumero($telephone)
+    {
+        $prefixe = substr($telephone,0,3);
+
+        return $this->select('
+                configurations.*,
+                reseaux.nom,
+                reseaux.commission_transfert
+            ')
+            ->join(
+                'reseaux',
+                'reseaux.id = configurations.reseau_id'
+            )
+            ->where('prefixe',$prefixe)
+            ->first();
+    }
+
 }

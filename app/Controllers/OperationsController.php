@@ -24,7 +24,6 @@ class OperationsController extends BaseController
                      ->get()
                      ->getRowArray();
 
-      
         return $config !== null;
     }
     public function depot()
