@@ -55,7 +55,7 @@ class ClientController extends BaseController
     {
         $data = [
             'solde'  => $this->getSolde(),
-            'numero' => session()->get('numero')
+            'numero' => session()->get('client')->numero_telephone
         ];
         return view('client/dashboard', $data);
     }
