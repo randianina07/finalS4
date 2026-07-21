@@ -98,3 +98,5 @@
 - [X] Fonction effectuerTran
     Choix de pourcentage par client(page client)
     Quand je reçois de l'argent , le pourcentage epargne dans epargne et le reste dans le solde
+    
+- [] promotion de pourcentage de transfert vers meme opérateur , page de modification de pourcentage 

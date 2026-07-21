@@ -233,17 +233,30 @@ class OperationsController extends BaseController
 
         // 3. Calcul des frais selon la part individuelle
         $fraisTransfert = (float) $baremeModel->getFrais(3, $montantParDestinataire);
+        if($estLocal){
+            $pourcentage = (float) $reseau->getCommissionTransfert($numero);
+            $reduction = $fraisTransfert * ($pourcentage / 100);
+            $fraisTransfert =  $fraisTransfert - $reduction;
+        }
+        
         
         $fraisRetraitOptionnel = 0;
-        if ($caseRetraitCochee && $estLocal) {
+        if ($caseRetraitCochee && $estLocal ) {
             $fraisRetraitOptionnel = (float) $baremeModel->getFrais(2, $montantParDestinataire);
         }
+
 
         $commission = 0;
         if (!$estLocal) {
             $pourcentage = (float) $reseau->getCommissionTransfert($numero);
             $commission = $montantParDestinataire * ($pourcentage / 100);
         }
+
+        // if ($estLocal) {
+        //     $pourcentage = (float) $reseau->getCommissionTransfert($numero);
+        //     $reduction = $fraisTransfert * ($pourcentage / 100);
+        //     $fraisTransfert =  $fraisTransfert - $reduction;
+        // }
 
         // Cumul des frais pour cette part
         $fraisTotaux = $fraisTransfert + $fraisRetraitOptionnel + $commission;
