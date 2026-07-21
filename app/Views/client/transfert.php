@@ -5,19 +5,29 @@
     <div class="page-card" style="max-width:550px; margin: 0 auto;">
         <h2>🔄 Faire un transfert</h2>
 
+        <!-- Alertes de retour -->
+    
+
         <form method="post" action="/client/transfert">
             
-            <div id="destinataires-container">
-                <label class="form-label">Destinataire(s) et Montant(s)</label>
+            <!-- Champ Montant Unique -->
+            <div class="mb-3">
+                <label for="montant" class="form-label font-weight-bold">Montant global à envoyer (Ar)</label>
+                <input type="number" name="montant" id="montant" min="1" step="1" class="form-control" placeholder="Ex: 50000" required>
+                <small class="text-muted d-block mt-1">
+                    En cas de destinataires multiples, ce montant sera divisé équitablement entre eux.
+                </small>
+            </div>
+
+            <!-- Liste dynamique des destinataires -->
+            <div id="destinataires-container" class="mb-2">
+                <label class="form-label font-weight-bold">Destinataire(s)</label>
                 
                 <div class="row g-2 mb-2 destinataire-row">
-                    <div class="col-7">
-                        <input type="text" name="numero_destinataire[]" class="form-control" placeholder="Numéro" required>
+                    <div class="col-10">
+                        <input type="text" name="numero_destinataire[]" class="form-control" placeholder="Numéro de téléphone" required>
                     </div>
-                    <div class="col-4">
-                        <input type="number" name="montant[]" min="1" step="1" class="form-control" placeholder="Montant (Ar)" required>
-                    </div>
-                    <div class="col-1 text-end">
+                    <div class="col-2 text-end">
                         <button type="button" class="btn btn-outline-danger btn-sm w-100 remove-dest-btn" style="display:none;">&times;</button>
                     </div>
                 </div>
@@ -27,6 +37,7 @@
                 <button type="button" id="add-dest-btn" class="btn btn-outline-secondary btn-sm">+ Ajouter un destinataire</button>
             </div>
 
+            <!-- Option Frais de retrait (Envoi unique seulement) -->
             <div id="frais-retrait-wrapper" class="form-check mb-4">
                 <input type="checkbox" name="retrait" value="1" id="retrait" class="form-check-input">
                 <label class="form-check-label" for="retrait">
@@ -34,7 +45,7 @@
                 </label>
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">Transférer</button>
+            <button type="submit" class="btn btn-primary w-100">Confirmer le transfert</button>
         </form>
     </div>
 
@@ -48,12 +59,12 @@
             function toggleOptions() {
                 const rows = container.querySelectorAll('.destinataire-row');
                 
-                rows.forEach((row, index) => {
+                rows.forEach((row) => {
                     const deleteBtn = row.querySelector('.remove-dest-btn');
                     deleteBtn.style.display = rows.length > 1 ? 'block' : 'none';
                 });
 
-            
+                // Si envoi multiple, on masque l'option frais de retrait
                 if (rows.length > 1) {
                     checkboxWrapper.style.display = 'none';
                     checkboxInput.checked = false; 
@@ -62,18 +73,16 @@
                 }
             }
 
-     
             addBtn.addEventListener('click', function () {
                 const firstRow = container.querySelector('.destinataire-row');
                 const newRow = firstRow.cloneNode(true);
                 
-                newRow.querySelectorAll('input').forEach(input => input.value = '');
+                newRow.querySelector('input').value = '';
                 
                 container.appendChild(newRow);
                 toggleOptions();
             });
 
-            // Supprimer une ligne via la délégation d'événements
             container.addEventListener('click', function (e) {
                 if (e.target.classList.contains('remove-dest-btn')) {
                     e.target.closest('.destinataire-row').remove();

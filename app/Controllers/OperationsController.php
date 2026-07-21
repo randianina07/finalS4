@@ -175,158 +175,136 @@ class OperationsController extends BaseController
         }
     }
     
-    public function effectuerTransfert()
-    {
-        $clientId = session()->get('client_id');
-        $db = \Config\Database::connect();
+   public function effectuerTransfert()
+{
+    $clientId = session()->get('client_id');
+    $db = \Config\Database::connect();
 
-        $numerosDest = $this->request->getPost('numero_destinataire');
-        $montantGlobal = (float) $this->request->getPost('montant');
-
-        if (!is_array($numerosDest)) {
-            $numerosDest = [$numerosDest];
-        }
-        $numerosDest = array_filter(array_map('trim', $numerosDest));
-
-        if (empty($numerosDest) || $montantGlobal <= 0) {
-            return redirect()->back()->with('error', 'Données de transfert invalides.');
-        }
-
-        $nombreDestinataires = count($numerosDest);
-        $estEnvoiMultiple = $nombreDestinataires > 1;
-
-        // Le retrait avec frais n'est possible que pour un seul destinataire
-        $caseRetraitCochee = !$estEnvoiMultiple && ($this->request->getPost('retrait') === '1');
-
-        $montantParDestinataire = $montantGlobal / $nombreDestinataires;
-
-        $baremeModel = new BaremesFrais();
-        $confModel   = new \App\Models\Configurations();
-
-        $coutTotalEmetteur  = 0;
-        $detailsTransferts  = [];
-
-        /*
-        * Vérification des destinataires
-        */
-        foreach ($numerosDest as $numero) {
-
-            if (!$this->estNumeroValide($numero)) {
-                return redirect()->back()->with('error', "Le numéro '{$numero}' n'est pas valide.");
-            }
-
-            // Recherche dans nos clients
-            $dest = $db->table('clients')
-                ->where('numero_telephone', $numero)
-                ->get()
-                ->getRowArray();
-
-            // Vérification du réseau
-            $infoReseau = $confModel->getReseauNumero($numero);
-
-            if (!$infoReseau) {
-                return redirect()->back()->with('error', "Le préfixe du numéro {$numero} n'est pas reconnu.");
-            }
-
-            // Local = notre opérateur
-            $estLocal = ($infoReseau['reseau_id'] == 1);
-
-            // Si externe il n'a pas besoin d'être dans clients
-            if ($estLocal && !$dest) {
-                return redirect()->back()->with('error', "Le numéro {$numero} appartient à notre opérateur mais n'existe pas.");
-            }
-
-            // Empêcher transfert vers soi-même
-            if ($dest && $dest['id'] == $clientId) {
-                return redirect()->back()->with('error', "Vous ne pouvez pas transférer vers votre propre numéro.");
-            }
-
-            // Frais transfert
-            $fraisTransfert = (float) $baremeModel->getFrais(3, $montantParDestinataire);
-
-            // Option retrait
-            $fraisRetraitOptionnel = 0;
-            if ($caseRetraitCochee && $estLocal) {
-                $fraisRetraitOptionnel = (float) $baremeModel->getFrais(2, $montantParDestinataire);
-            }
-
-            // Commission autre opérateur
-            $commission = 0;
-            if (!$estLocal) {
-                $pourcentage = (float) $infoReseau['commission_transfert'];
-                $commission = $montantParDestinataire * ($pourcentage / 100);
-            }
-
-            // Montant total à débiter chez l'émetteur pour ce destinataire
-            $coutPourCeDest = $montantParDestinataire + $fraisTransfert + $fraisRetraitOptionnel + $commission;
-            $coutTotalEmetteur += $coutPourCeDest;
-
-            // Ce que reçoit le destinataire local
-            $montantPourDestinataire = $montantParDestinataire + $fraisRetraitOptionnel;
-
-            $detailsTransferts[] = [
-                'numero'             => $numero,
-                'destinataire'       => $dest,
-                'est_local'          => $estLocal,
-                'frais_total_gagne'  => $fraisTransfert,
-                'montant_recu_solde' => $montantPourDestinataire
-            ];
-        }
-
-        /*
-        * Vérification solde source
-        */
-        $emetteur = $db->table('clients')->where('id', $clientId)->get()->getRowArray();
-
-        if (!$emetteur || $emetteur['solde'] < $coutTotalEmetteur) {
-            return redirect()->back()->with('error', "Solde insuffisant. Il vous faut {$coutTotalEmetteur} Ar.");
-        }
-
-        /*
-        * Transaction SQL
-        */
-        $db->transBegin();
-
-        // --- Débit du client source pour le montant total de l'opération ---
-        $db->table('clients')
-            ->where('id', $clientId)
-            ->decrement('solde', $coutTotalEmetteur);
-
-        foreach ($detailsTransferts as $transfert) {
-
-            $idDestination = null;
-
-            // Crédit seulement si client local
-            if ($transfert['est_local']) {
-                $idDestination = $transfert['destinataire']['id'];
-
-                $db->table('clients')
-                    ->where('id', $idDestination)
-                    ->increment('solde', $transfert['montant_recu_solde']);
-            }
-
-            // Historique mouvement
-            $db->table('mouvements')->insert([
-                'type_operation_id'      => 3,
-                'client_source_id'       => $clientId,
-                'client_destination_id'  => $idDestination,
-                'montant_brut'           => $montantParDestinataire,
-                'frais'                  => $transfert['frais_total_gagne'],
-                'date_creation'          => date('Y-m-d H:i:s')
-            ]);
-        }
-
-        if ($db->transStatus() === false) {
-            $db->transRollback();
-            return redirect()->back()->with('error', 'Une erreur est survenue lors du transfert.');
-        }
-
-        $db->transCommit();
-
-        $message = $estEnvoiMultiple
-            ? "Multi-transfert réussi ! {$montantParDestinataire} Ar envoyés à chacun des {$nombreDestinataires} contacts."
-            : "Transfert effectué avec succès !";
-
-        return redirect()->back()->with('success', $message);
+    $numerosDest = $this->request->getPost('numero_destinataire');
+    $montantGlobal = (float) $this->request->getPost('montant');
+    
+    if (!is_array($numerosDest)) {
+        $numerosDest = [$numerosDest];
     }
+
+    // Nettoyage des numéros
+    $numerosDest = array_filter(array_map('trim', $numerosDest));
+
+    if (empty($numerosDest) || $montantGlobal <= 0) {
+        return redirect()->back()->with('error', 'Veuillez renseigner au moins un numéro et un montant valide.');
+    }
+
+    $nombreDestinataires = count($numerosDest);
+    $estEnvoiMultiple = $nombreDestinataires > 1;
+
+    // L'option frais de retrait est disponible uniquement pour un envoi unique
+    $caseRetraitCochee = !$estEnvoiMultiple && ($this->request->getPost('retrait') === '1');
+
+    // On divise le montant global par le nombre de destinataires
+    $montantParDestinataire = $montantGlobal / $nombreDestinataires;
+
+    $baremeModel = new BaremesFrais();
+    $reseau = new Reseaux();
+
+    $coutTotalEmetteur = 0;
+    $detailsTransferts = [];
+
+    foreach ($numerosDest as $numero) {
+
+        // 1. Vérification du préfixe
+        if (!$this->estNumeroValide($numero)) {
+            return redirect()->back()->with('error', "Le numéro '{$numero}' n'a pas un préfixe réseau valide.");
+        }
+
+        // 2. Vérification réseau local ou externe
+        $estLocal = ($reseau->estNumeroLocal($numero) == 1);
+        $dest = $db->table('clients')->where('numero_telephone', $numero)->get()->getRowArray();
+
+        // Numéro local mais introuvable en BDD
+        if ($estLocal && !$dest) {
+            return redirect()->back()->with('error', "Le numéro local {$numero} n'est attribué à aucun client.");
+        }
+
+        // Sécurité auto-transfert
+        if ($dest && $clientId == $dest['id']) {
+            return redirect()->back()->with('error', "Vous ne pouvez pas effectuer un transfert vers votre propre numéro.");
+        }
+
+        // 3. Calcul des frais selon la part individuelle
+        $fraisTransfert = (float) $baremeModel->getFrais(3, $montantParDestinataire);
+        
+        $fraisRetraitOptionnel = 0;
+        if ($caseRetraitCochee && $estLocal) {
+            $fraisRetraitOptionnel = (float) $baremeModel->getFrais(2, $montantParDestinataire);
+        }
+
+        $commission = 0;
+        if (!$estLocal) {
+            $pourcentage = (float) $reseau->getCommissionTransfert($numero);
+            $commission = $montantParDestinataire * ($pourcentage / 100);
+        }
+
+        // Cumul des frais pour cette part
+        $fraisTotaux = $fraisTransfert + $fraisRetraitOptionnel + $commission;
+        $coutPourCeDest = $montantParDestinataire + $fraisTotaux;
+        
+        $coutTotalEmetteur += $coutPourCeDest;
+
+        $montantPourDestinataire = $montantParDestinataire + $fraisRetraitOptionnel;
+
+        $detailsTransferts[] = [
+            'destinataire'        => $dest,
+            'numero'              => $numero,
+            'est_local'           => $estLocal,
+            'montant_brut'        => $montantParDestinataire,
+            'frais_totaux'        => $fraisTransfert,
+            'montant_recu_solde'  => $montantPourDestinataire,
+            'total_debit'         => $coutPourCeDest
+        ];
+    }
+
+    // 4. Vérification de la provision globale
+    $emetteur = $db->table('clients')->where('id', $clientId)->get()->getRowArray();
+    if (!$emetteur || $emetteur['solde'] < $coutTotalEmetteur) {
+        return redirect()->back()->with('error', "Solde insuffisant. Il vous faut un total de {$coutTotalEmetteur} Ar (montant + frais/commissions) pour effectuer cette opération.");
+    }
+
+    // 5. Transaction BDD
+    $db->transBegin();
+
+    // Débit global sur l'émetteur
+    $db->table('clients')->where('id', $clientId)->decrement('solde', $coutTotalEmetteur);
+
+    foreach ($detailsTransferts as $transfert) {
+        // Crédit du destinataire s'il est local
+        if ($transfert['est_local'] && $transfert['destinataire'] !== null) {
+            $db->table('clients')
+               ->where('id', $transfert['destinataire']['id'])
+               ->increment('solde', $transfert['montant_recu_solde']);
+        }
+
+        // Historisation
+        $db->table('mouvements')->insert([
+            'type_operation_id'     => 3,
+            'client_source_id'      => $clientId,
+            'client_destination_id' => $transfert['est_local'] ? $transfert['destinataire']['id'] : null,
+            'montant_brut'          => $transfert['montant_brut'],
+            'frais'                 => $transfert['frais_totaux'],
+            'date_creation'         => date('Y-m-d H:i:s')
+        ]);
+    }
+
+    if ($db->transStatus() === false) {
+        $db->transRollback();
+        return redirect()->back()->with('error', 'Une erreur est survenue lors de la validation du transfert.');
+    }
+
+    $db->transCommit();
+
+    $message = $estEnvoiMultiple 
+        ? "Multi-transfert réussi ! Le montant de {$montantGlobal} Ar a été divisé ({$montantParDestinataire} Ar/personne). Avec commission : {$commission} et frais de transfert : {$fraisTransfert} "
+        : "Transfert effectué avec succès ! Avec commission : {$commission} et frais de transfert : {$fraisTransfert} et frais de retrait : {$fraisRetraitOptionnel} ";
+
+    return redirect()->back()->with('success', $message);
+}
 }
