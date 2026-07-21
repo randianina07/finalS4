@@ -6,17 +6,7 @@
         <h2>🔄 Faire un transfert</h2>
 
         <!-- Alertes de retour -->
-        <?php if (session()->getFlashdata('error')) : ?>
-            <div class="alert alert-danger mb-3">
-                <?= session()->getFlashdata('error') ?>
-            </div>
-        <?php endif; ?>
-
-        <?php if (session()->getFlashdata('success')) : ?>
-            <div class="alert alert-success mb-3">
-                <?= session()->getFlashdata('success') ?>
-            </div>
-        <?php endif; ?>
+    
 
         <form method="post" action="/client/transfert">
             
