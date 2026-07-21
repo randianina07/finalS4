@@ -523,3 +523,18 @@ table.data-table tbody tr:hover {
     background: #667eea;
     color: #ffffff;
 }
+
+.destinataire-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.destinataire-row input {
+    flex: 1;
+}
+
+#frais-retrait-wrapper {
+    margin-top: 15px;
+}

@@ -302,8 +302,8 @@ class OperationsController extends BaseController
     $db->transCommit();
 
     $message = $estEnvoiMultiple 
-        ? "Multi-transfert réussi ! Le montant de {$montantGlobal} Ar a été divisé ({$montantParDestinataire} Ar/personne)."
-        : "Transfert effectué avec succès !";
+        ? "Multi-transfert réussi ! Le montant de {$montantGlobal} Ar a été divisé ({$montantParDestinataire} Ar/personne). Avec commission : {$commission} et frais de transfert : {$fraisTransfert} "
+        : "Transfert effectué avec succès ! Avec commission : {$commission} et frais de transfert : {$fraisTransfert} et frais de retrait : {$fraisRetraitOptionnel} ";
 
     return redirect()->back()->with('success', $message);
 }
